@@ -246,7 +246,7 @@ impl GeyserGrpcBuilder {
     fn build(
         self,
         channel: Channel,
-    ) -> GeyserGrpcBuilderResult<GeyserGrpcClient<impl Interceptor>> {
+    ) -> GeyserGrpcBuilderResult<GeyserGrpcClient<InterceptorXToken>> {
         let interceptor: InterceptorXToken = self.x_token.into();
 
         let mut geyser = GeyserClient::with_interceptor(channel.clone(), interceptor.clone());
@@ -269,12 +269,12 @@ impl GeyserGrpcBuilder {
         ))
     }
 
-    pub async fn connect(self) -> GeyserGrpcBuilderResult<GeyserGrpcClient<impl Interceptor>> {
+    pub async fn connect(self) -> GeyserGrpcBuilderResult<GeyserGrpcClient<InterceptorXToken>> {
         let channel = self.endpoint.connect().await?;
         self.build(channel)
     }
 
-    pub fn connect_lazy(self) -> GeyserGrpcBuilderResult<GeyserGrpcClient<impl Interceptor>> {
+    pub fn connect_lazy(self) -> GeyserGrpcBuilderResult<GeyserGrpcClient<InterceptorXToken>> {
         let channel = self.endpoint.connect_lazy();
         self.build(channel)
     }
